@@ -16,7 +16,9 @@ function generateCode() {
 }
 
 const getLink = (req: Request, res: Response) : void => {
-    res.send('GET link')
+    const code = req.params.code as string;
+    const link = links.find(item => item.code === code)
+    link ? res.json(link) : res.sendStatus(404)
 }
 
 const postLink = (req: Request, res: Response) : void => {
@@ -31,7 +33,14 @@ const postLink = (req: Request, res: Response) : void => {
 }
 
 const getStats = (req: Request, res: Response) : void => {
-    res.send('GET stats')
+    const code = req.params.code as string
+    const index = links.findIndex( item => item.code === code )
+    if (index === -1) {
+      res.sendStatus(404)
+    } else {
+      links[index].hits++
+      res.json(links[index])
+    }
 }
 
 export default {

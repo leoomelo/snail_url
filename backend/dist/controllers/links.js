@@ -11,7 +11,9 @@ function generateCode() {
     return text;
 }
 const getLink = (req, res) => {
-    res.send('GET link');
+    const code = req.params.code;
+    const link = links.find(item => item.code === code);
+    link ? res.json(link) : res.sendStatus(404);
 };
 const postLink = (req, res) => {
     const link = req.body;
@@ -22,7 +24,17 @@ const postLink = (req, res) => {
     res.status(201).json(link);
 };
 const getStats = (req, res) => {
-    res.send('GET stats');
+    console.log(links);
+    const code = req.params.code;
+    console.log(code);
+    const index = links.findIndex(item => item.code === code);
+    if (index === -1) {
+        res.sendStatus(404);
+    }
+    else {
+        links[index].hits++;
+        res.json(links[index]);
+    }
 };
 exports.default = {
     getLink,

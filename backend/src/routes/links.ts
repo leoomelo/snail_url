@@ -4,9 +4,9 @@ import linksController from '../controllers/links'
 
 const router = Router()
 
-router.get('/links/:code', linksController.getLink)
+router.get('/links/:code', linksController.getStats)
 
-router.get('/link/stats', linksController.getStats)
+router.get('/links/:code/stats', linksController.getLink)
 
 router.post('/links', linksController.postLink)
 
